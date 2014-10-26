@@ -27,6 +27,7 @@ class TransactionTable
      */
     public function open(){
         $this->csvReader = new Reader($this->csvFile);
+        $this->csvReader->setDelimiter(';');
     }
 
     /**
