@@ -1,6 +1,9 @@
 <?php
 namespace Transactions;
 
+use Transactions\Model\Merchant;
+use Transactions\Data\TransactionTable;
+use Transactions\Data\CurrencyWebservice;
 use Zend\ModuleManager\Feature\ConsoleUsageProviderInterface;
 use Zend\Console\Adapter\AdapterInterface as Console;
 
@@ -18,6 +21,25 @@ class Module implements ConsoleUsageProviderInterface
                 'namespaces' => array(
                     __NAMESPACE__ => __DIR__ . '/src/' . __NAMESPACE__,
                 ),
+            ),
+        );
+    }
+
+    public function getServiceConfig()
+    {
+        return array(
+            'factories' => array(
+                'Transactions\Model\Merchant' =>  function($sm) {
+                    $transactionTable = $sm->get('TransactionTable');
+                    $merchant = new Merchant($transactionTable);
+                    return $merchant;
+                },
+                'TransactionTable' => function () {
+                    return new TransactionTable();
+                },
+                'CurrencyWebservice' => function () {
+                    return new CurrencyWebservice();
+                },
             ),
         );
     }
