@@ -14,7 +14,10 @@ class Merchant
         $this->transactionTable = $transactionTable;
     }
 
-    public function getTransactions()
+    /**
+     * @param $merchantID string
+     */
+    public function getTransactions($merchantID)
     {
 
     }

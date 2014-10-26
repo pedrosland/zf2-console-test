@@ -2,6 +2,7 @@
 
 namespace Transactions\Controller;
 
+use Transactions\Model\CurrencyConverter;
 use Transactions\Model\Merchant;
 use Zend\Mvc\Controller\AbstractActionController;
 use Zend\Console\Request as ConsoleRequest;
@@ -13,6 +14,10 @@ class TransactionsController extends AbstractActionController
      * @var Merchant
      */
     protected $merchant;
+    /**
+     * @var CurrencyConverter
+     */
+    protected $currencyConverter;
 
     public function listAction()
     {
@@ -27,7 +32,9 @@ class TransactionsController extends AbstractActionController
         // Get user email from console and check if the user used --verbose or -v flag
         $merchantID = $request->getParam('merchantID');
 
-        $this->getMerchant();
+        $merchant = $this->getMerchant();
+
+        $transactions = $merchant->getTransactions($merchantID);
 
         return "MerchantID: $merchantID";
     }
@@ -44,6 +51,20 @@ class TransactionsController extends AbstractActionController
             $this->merchant = $sm->get('Transactions\Model\Merchant');
         }
         return $this->merchant;
+    }
+
+    /**
+     * Get CurrencyConverter instance
+     *
+     * @return CurrencyConverter
+     */
+    public function getCurrencyConverter()
+    {
+        if (!$this->currencyConverter) {
+            $sm = $this->getServiceLocator();
+            $this->currencyConverter = $sm->get('Transactions\Model\CurrencyConverter');
+        }
+        return $this->currencyConverter;
     }
 
 }
