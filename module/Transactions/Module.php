@@ -1,6 +1,7 @@
 <?php
 namespace Transactions;
 
+use Transactions\Model\CurrencyConverter;
 use Transactions\Model\Merchant;
 use Transactions\Data\TransactionTable;
 use Transactions\Data\CurrencyWebservice;
@@ -31,8 +32,11 @@ class Module implements ConsoleUsageProviderInterface
             'factories' => array(
                 'Transactions\Model\Merchant' =>  function($sm) {
                     $transactionTable = $sm->get('TransactionTable');
-                    $merchant = new Merchant($transactionTable);
-                    return $merchant;
+                    return new Merchant($transactionTable);
+                },
+                'Transactions\Model\CurrencyConverter' =>  function($sm) {
+                    $currencyWebService = $sm->get('CurrencyWebService');
+                    return new CurrencyConverter($currencyWebService);
                 },
                 'TransactionTable' => function () {
                     return new TransactionTable();
