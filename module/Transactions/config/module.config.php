@@ -1,5 +1,10 @@
 <?php
 return array(
+    'controllers' => array(
+        'invokables' => array(
+            'Transactions\Controller\Transactions' => 'Transactions\Controller\TransactionsController',
+        ),
+    ),
     'console' => array(
         'router' => array(
             'routes' => array(
