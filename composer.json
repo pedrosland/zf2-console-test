@@ -10,6 +10,7 @@
     "require": {
         "php": ">=5.3.3",
         "zendframework/zendframework": "2.3.*",
-        "jwage/easy-csv": "~0.0"
+        "jwage/easy-csv": "~0.0",
+        "phpunit/phpunit": "~4.3"
     }
 }
