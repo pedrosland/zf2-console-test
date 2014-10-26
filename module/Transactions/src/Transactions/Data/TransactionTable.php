@@ -40,6 +40,21 @@ class TransactionTable
     }
 
     /**
+     * Read all records in CSV file
+     *
+     * @param $merchantID
+     * @return array
+     */
+    public function readMerchant($merchantID){
+        $rows = $this->csvReader->getAll();
+
+        // use array_values to re-order list
+        return array_values(array_filter($rows, function($rows) use ($merchantID){
+            return $rows['merchant'] == $merchantID;
+        }));
+    }
+
+    /**
      * Dispose of Reader
      */
     public function close(){
